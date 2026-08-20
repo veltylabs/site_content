@@ -1,3 +1,4 @@
+```mermaid
 flowchart TD
     Content["Content<br/>SiteID (PK)"]
     Brand["Brand<br/>Name, WideLogo, CompactLogo, LogoAlt, PrimaryColor"]
@@ -25,3 +26,4 @@ flowchart TD
     Content --> Map
     Content --> SEO
     Content --> ImageRef
+```
