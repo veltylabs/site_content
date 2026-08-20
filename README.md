@@ -1,4 +1,5 @@
 # site_content
+<img src="docs/img/badges.svg">
 
 Esquema del contenido editable de un sitio de cliente dentro del producto `misitio` (`misitio.velty.cl`).
 
