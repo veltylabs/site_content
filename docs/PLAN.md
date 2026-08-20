@@ -3,6 +3,8 @@ PLAN: "feat: esquema del contenido editable de un sitio de cliente"
 TAG: v0.1.0
 EXECUTOR: jules
 REVIEWER: none
+STATUS: running
+SESSION: 13951118495392759686
 ---
 
 > Este plan se despacha con el flujo CodeJob. Ver skill: agents-workflow.
