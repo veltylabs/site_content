@@ -44,6 +44,11 @@ func Validate(c *Content) error {
 		return err
 	}
 
+	// Validate Hero Title NotNull
+	if err := model.ValidateFields(model.ActionCreate, &c.Hero); err != nil {
+		return err
+	}
+
 	// Validate Brand PrimaryColor format if present
 	if c.Brand.PrimaryColor != "" {
 		if !isValidHexColor(c.Brand.PrimaryColor) {
@@ -69,6 +74,12 @@ func Validate(c *Content) error {
 
 	for i := 0; i < len(c.Hero.CtAs); i++ {
 		if err := model.ValidateFields(model.ActionCreate, &c.Hero.CtAs[i]); err != nil {
+			return err
+		}
+	}
+
+	for i := 0; i < len(c.Hero.Images); i++ {
+		if err := model.ValidateFields(model.ActionCreate, &c.Hero.Images[i]); err != nil {
 			return err
 		}
 	}

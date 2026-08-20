@@ -38,6 +38,13 @@ func validContent() *sitecontent.Content {
 			Email:   "test@example.com",
 			Address: "Calle Test 123, Depto 4B",
 		},
+		Hero: sitecontent.Hero{
+			Title: "Titulo Hero Principal",
+			Images: []sitecontent.ImageItem{
+				{Key: "hero-img-1"},
+				{Key: "hero-img-2"},
+			},
+		},
 		Seo: sitecontent.SEO{
 			Description: "Descripcion SEO con ; = { } y [ ]",
 		},
@@ -162,6 +169,12 @@ func TestModule_SaveAndGetRoundtrip(t *testing.T) {
 	if read.SiteId != c.SiteId {
 		t.Errorf("expected SiteId %q, got %q", c.SiteId, read.SiteId)
 	}
+	if read.Hero.Title != c.Hero.Title {
+		t.Errorf("expected Hero.Title %q, got %q", c.Hero.Title, read.Hero.Title)
+	}
+	if len(read.Hero.Images) != len(c.Hero.Images) {
+		t.Errorf("expected %d hero images, got %d", len(c.Hero.Images), len(read.Hero.Images))
+	}
 	if read.Brand.Name != c.Brand.Name {
 		t.Errorf("expected Brand.Name %q, got %q", c.Brand.Name, read.Brand.Name)
 	}
@@ -195,5 +208,14 @@ func TestModule_SiteIsolation(t *testing.T) {
 	_, err := m.Get("site-B")
 	if err != sitecontent.ErrNotFound {
 		t.Fatalf("expected ErrNotFound for site-B, got: %v", err)
+	}
+}
+
+func TestValidation_MissingHeroTitle(t *testing.T) {
+	c := validContent()
+	c.Hero.Title = ""
+	err := sitecontent.Validate(c)
+	if err == nil {
+		t.Fatal("expected error for empty Hero.Title, got nil")
 	}
 }

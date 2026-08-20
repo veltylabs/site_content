@@ -6,6 +6,41 @@ import (
 	"github.com/tinywasm/model"
 )
 
+type ImageItem struct {
+	Key string
+}
+
+func (m *ImageItem) ModelName() string { return "image_item" }
+
+func (m *ImageItem) Schema() []model.Field { return ImageItemModel.Fields }
+
+func (m *ImageItem) Pointers() []any { return []any{&m.Key} }
+
+func (m *ImageItem) IsNil() bool { return m == nil }
+
+func (m *ImageItem) EncodeFields(w model.FieldWriter) {
+	w.String("Key", m.Key)
+}
+
+func (m *ImageItem) DecodeFields(r model.FieldReader) {
+	if v, ok := r.String("Key"); ok { m.Key = v }
+}
+
+type ImageItemList []*ImageItem
+
+func (s *ImageItemList) Schema() []model.Field { return nil }
+func (s *ImageItemList) Pointers() []any     { return nil }
+func (s *ImageItemList) Len() int             { return len(*s) }
+func (s *ImageItemList) At(i int) model.Fielder { return (*s)[i] }
+func (s *ImageItemList) Append() model.Fielder  { v := &ImageItem{}; *s = append(*s, v); return v }
+func (s *ImageItemList) IsNil() bool          { return s == nil }
+func (s *ImageItemList) EncodeFields(_ model.FieldWriter) {}
+func (s *ImageItemList) DecodeFields(_ model.FieldReader) {}
+
+func (m *ImageItem) Validate(action byte) error {
+	return model.ValidateFields(action, m)
+}
+
 type Link struct {
 	Text string
 	Url string
@@ -48,7 +83,7 @@ type Hero struct {
 	Title string
 	Subtitle string
 	CtAs []Link
-	Images string
+	Images []ImageItem
 }
 
 func (m *Hero) ModelName() string { return "hero" }
@@ -69,7 +104,13 @@ func (m *Hero) EncodeFields(w model.FieldWriter) {
 			}
 			arr.Close()
 		}
-	w.String("Images", m.Images)
+		{
+			arr := w.Array("Images", len(m.Images))
+			for _, x := range m.Images {
+				arr.Object(&x)
+			}
+			arr.Close()
+		}
 }
 
 func (m *Hero) DecodeFields(r model.FieldReader) {
@@ -82,7 +123,13 @@ func (m *Hero) DecodeFields(r model.FieldReader) {
 			arr.Object(i, &m.CtAs[i])
 		}
 	}
-	if v, ok := r.String("Images"); ok { m.Images = v }
+	if arr, ok := r.Array("Images"); ok {
+		n := arr.Len()
+		m.Images = make([]ImageItem, n)
+		for i := 0; i < n; i++ {
+			arr.Object(i, &m.Images[i])
+		}
+	}
 }
 
 type HeroList []*Hero
