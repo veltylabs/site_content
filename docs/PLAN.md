@@ -3,8 +3,9 @@ PLAN: "feat: esquema del contenido editable de un sitio de cliente"
 TAG: v0.1.0
 EXECUTOR: jules
 REVIEWER: none
-STATUS: running
+STATUS: review
 SESSION: 13951118495392759686
+PR: https://github.com/veltylabs/site_content/pull/1
 ---
 
 > Este plan se despacha con el flujo CodeJob. Ver skill: agents-workflow.
