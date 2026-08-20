@@ -3,8 +3,9 @@ PLAN: "feat: esquema del contenido editable de un sitio de cliente"
 TAG: v0.1.0
 EXECUTOR: jules
 REVIEWER: none
-STATUS: running
+STATUS: review
 SESSION: 13951118495392759686
+PR: https://github.com/veltylabs/site_content/pull/1
 ---
 
 > Este plan se despacha con el flujo CodeJob. Ver skill: agents-workflow.
@@ -214,7 +215,7 @@ Con `orm.New(mem.New())`.
 |---|---|---|
 | 1 | `Content` con `Contact.Phone` vacío | error de `NotNull` |
 | 2 | dos `Service` con el mismo `Slug` | error con el mensaje textual de §1.3 |
-| 3 | dos `Service` con el mismo `Title` | error |
+| 3 | dos `Service` con el mismo Title | error |
 | 4 | dos `Service` con la misma `Description` | error |
 | 5 | `Slug` con mayúsculas o espacios | error de formato |
 | 6 | `ImageRef.Alt` vacío | error de `NotNull` |
@@ -243,16 +244,16 @@ CI. Escríbelos aunque los tres parezcan el mismo test.
 
 ## 5. Criterios de aceptación
 
-- [ ] `go vet ./...` limpio; `go test ./tests/...` en verde con los 10 casos.
-- [ ] `grep -rn "tinywasm/layout" .` → **vacío**. Es la regla que define al módulo.
-- [ ] `grep -rn "tinywasm/sqlite\|tinywasm/postgres\|tinywasm/sqlt\|net/http\|tinywasm/mcp\|tinywasm/unixid\|tinywasm/json\|tinywasm/jsvalue" .` → **vacío, tests incluidos**.
-- [ ] `grep -rn "map\[" --include=*.go . | grep -v _test.go` → vacío.
-- [ ] `grep -rn "encoding/json\|\"reflect\"\|\"strings\"\|\"errors\"\|\"strconv\"\|\"log\"" --include=*.go .` → vacío.
-- [ ] `grep -rn "http://\|https://" --include=*.go . | grep -v _test.go` → vacío: **`ImageRef.Key` no es una URL**.
-- [ ] `grep -rn "internal/" .` → vacío.
-- [ ] `ls site_content.go` → no existe.
-- [ ] Códecs generados con `ormc`, commiteados.
-- [ ] `grep -rn "subgraph" docs/` → vacío.
+- [x] `go vet ./...` limpio; `go test ./tests/...` en verde con los 10 casos.
+- [x] `grep -rn "tinywasm/layout" .` → **vacío**. Es la regla que define al módulo.
+- [x] `grep -rn "tinywasm/sqlite\|tinywasm/postgres\|tinywasm/sqlt\|net/http\|tinywasm/mcp\|tinywasm/unixid\|tinywasm/json\|tinywasm/jsvalue" .` → **vacío, tests incluidos**.
+- [x] `grep -rn "map\[" --include=*.go . | grep -v _test.go` → vacío.
+- [x] `grep -rn "encoding/json\|\"reflect\"\|\"strings\"\|\"errors\"\|\"strconv\"\|\"log\"" --include=*.go .` → vacío.
+- [x] `grep -rn "http://\|https://" --include=*.go . | grep -v _test.go` → vacío: **`ImageRef.Key` no es una URL**.
+- [x] `grep -rn "internal/" .` → vacío.
+- [x] `ls site_content.go` → no existe.
+- [x] Códecs generados con `ormc`, commiteados.
+- [x] `grep -rn "subgraph" docs/` → vacío.
 
 ## 6. Fuera de alcance
 
