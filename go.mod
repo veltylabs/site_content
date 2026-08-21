@@ -10,3 +10,5 @@ require (
 	github.com/tinywasm/router v0.1.23
 	github.com/tinywasm/storage v0.0.4
 )
+
+require github.com/tinywasm/input v0.0.4
