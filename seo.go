@@ -1,12 +1,15 @@
 package sitecontent
 
-import "github.com/tinywasm/model"
+import (
+	"github.com/tinywasm/input"
+	"github.com/tinywasm/model"
+)
 
 var SEOModel = model.Definition{
 	Name: "seo",
 	Fields: model.Fields{
-		{Name: "Description", Type: model.Text(), NotNull: true, Permitted: model.Permitted{Letters: true, Numbers: true, Spaces: true, Extra: []rune("=;{}[].,#_:-")}},
-		{Name: "SocialImage", Type: model.Text()},
-		{Name: "SchemaType", Type: model.Text()},
+		{Name: "Description", Type: input.Text(), NotNull: true, Permitted: model.Permitted{Letters: true, Numbers: true, Spaces: true, Extra: []rune("=;{}[].,#_:-")}},
+		{Name: "SocialImage", Type: input.Text(), Permitted: model.Permitted{Letters: true, Numbers: true, Extra: []rune("-_/.")}},
+		{Name: "SchemaType", Type: input.Text(), Permitted: model.Permitted{Letters: true, Numbers: true}},
 	},
 }

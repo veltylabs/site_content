@@ -1,11 +1,14 @@
 package sitecontent
 
-import "github.com/tinywasm/model"
+import (
+	"github.com/tinywasm/input"
+	"github.com/tinywasm/model"
+)
 
 var ScheduleModel = model.Definition{
 	Name: "schedule",
 	Fields: model.Fields{
-		{Name: "Days", Type: model.Text()},
-		{Name: "Hours", Type: model.Text()},
+		{Name: "Days", Type: input.Text(), Permitted: model.Permitted{Letters: true, Numbers: true, Spaces: true, Extra: []rune("-,")}},
+		{Name: "Hours", Type: input.Text(), Permitted: model.Permitted{Letters: true, Numbers: true, Spaces: true, Extra: []rune(":-.")}},
 	},
 }
