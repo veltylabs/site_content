@@ -156,9 +156,9 @@ func ReadOneContent(qb *orm.QB, model *Content) (*Content, error) {
 
 func ReadAllContent(qb *orm.QB) (ContentList, error) {
 	var results ContentList
-	err := orm.ReadAll(qb,
-		func() *Content { return &Content{} },
-		func(m *Content) { results = append(results, m) },
+	err := qb.ReadAll(
+		func() model.Model { return &Content{} },
+		func(m model.Model) { results = append(results, m.(*Content)) },
 	)
 	return results, err
 }
