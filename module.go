@@ -137,7 +137,7 @@ func (m *Module) Save(c *Content) error {
 
 func (m *Module) OpGet(ctx router.Context) {
 	var args Content
-	if err := ctx.Decode(&args); err != nil {
+	if err := router.Decode(ctx, &args); err != nil {
 		ctx.WriteStatus(400)
 		return
 	}
@@ -157,12 +157,12 @@ func (m *Module) OpGet(ctx router.Context) {
 	}
 
 	ctx.WriteStatus(200)
-	_ = ctx.Encode(res)
+	_ = router.Encode(ctx, res)
 }
 
 func (m *Module) OpSave(ctx router.Context) {
 	var args Content
-	if err := ctx.Decode(&args); err != nil {
+	if err := router.Decode(ctx, &args); err != nil {
 		ctx.WriteStatus(400)
 		return
 	}
@@ -177,5 +177,5 @@ func (m *Module) OpSave(ctx router.Context) {
 	}
 
 	ctx.WriteStatus(200)
-	_ = ctx.Encode(&args)
+	_ = router.Encode(ctx, &args)
 }
