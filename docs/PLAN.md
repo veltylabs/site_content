@@ -2,8 +2,9 @@
 PLAN: "fix: los ops leian y sobrescribian el contenido de cualquier sitio"
 EXECUTOR: jules
 REVIEWER: none
-STATUS: running
+STATUS: review
 SESSION: 5562334572438625732
+PR: https://github.com/veltylabs/site_content/pull/3
 ---
 
 > Este plan se despacha con el flujo CodeJob. Ver skill: agents-workflow.
