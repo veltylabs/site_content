@@ -45,13 +45,15 @@ func (m *ContentRecord) Validate(action byte) error {
 }
 
 type Deps struct {
-	DB  *orm.DB
-	IDs model.IDGenerator
+	DB      *orm.DB
+	IDs     model.IDGenerator
+	Members MemberChecker // nil DENIEGA en los ops; los métodos de servicio no lo consultan
 }
 
 type Module struct {
-	db  *orm.DB
-	ids model.IDGenerator
+	db      *orm.DB
+	ids     model.IDGenerator
+	members MemberChecker
 }
 
 func New(d Deps) (*Module, error) {
@@ -63,8 +65,9 @@ func New(d Deps) (*Module, error) {
 	}
 
 	m := &Module{
-		db:  d.DB,
-		ids: d.IDs,
+		db:      d.DB,
+		ids:     d.IDs,
+		members: d.Members,
 	}
 
 	if compiler, ok := d.DB.RawConn().(ddl.Compiler); ok {
@@ -135,14 +138,34 @@ func (m *Module) Save(c *Content) error {
 	return m.db.Create(rec)
 }
 
+// requireMember es el único sitio donde se decide si un llamante puede tocar
+// el contenido de un sitio. Una sola implementación: repetirla en cada op
+// garantiza que algún día falte en uno.
+func (m *Module) requireMember(ctx router.Context, siteID string) bool {
+	userID := ctx.UserID()
+	if userID == "" {
+		ctx.WriteStatus(401)
+		return false
+	}
+	if siteID == "" {
+		ctx.WriteStatus(400)
+		return false
+	}
+	// nil deniega: sin comprobador no hay permiso.
+	if m.members == nil || !m.members.CanEditContent(userID, siteID) {
+		ctx.WriteStatus(403)
+		return false
+	}
+	return true
+}
+
 func (m *Module) OpGet(ctx router.Context) {
 	var args Content
 	if err := ctx.Decode(&args); err != nil {
 		ctx.WriteStatus(400)
 		return
 	}
-	if args.SiteId == "" {
-		ctx.WriteStatus(400)
+	if !m.requireMember(ctx, args.SiteId) {
 		return
 	}
 
@@ -164,6 +187,9 @@ func (m *Module) OpSave(ctx router.Context) {
 	var args Content
 	if err := ctx.Decode(&args); err != nil {
 		ctx.WriteStatus(400)
+		return
+	}
+	if !m.requireMember(ctx, args.SiteId) {
 		return
 	}
 
