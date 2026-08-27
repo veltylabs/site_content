@@ -28,12 +28,26 @@ This module exists so there is **exactly one** schema contract between the editi
 - `SEO`: Search engine optimization settings (`Description`, `SocialImage`, `SchemaType`).
 - `ImageRef`: Asset reference (`Key`, `Alt`, `Usage`).
 
+## Access Surfaces & Security Model
+
+This module exposes two distinct access surfaces with different security contracts:
+
+1. **Service Methods (`Get`, `Save`)**:
+   - Do **not** perform membership checks or membership authorization.
+   - Designed for internal calls by a composition root (e.g. REST handlers) that handles authorization independently.
+   - `Deps.Members` can be `nil` without affecting direct service method invocation.
+
+2. **Module Operations (`OpGet`, `OpSave`)**:
+   - Enforce membership access via the injected `MemberChecker` interface.
+   - Execute membership verification before reading or validating/writing domain data.
+   - Deny operation access (`403 Forbidden`) if `Deps.Members` is `nil` or if `CanEditContent(userID, siteID)` returns `false`.
+
 ## Operations
 
 | Op | Resource | Action | Description |
 |---|---|---|---|
-| `get` | `site_content` | `model.Read` | Fetches site content by `SiteID`. |
-| `save` | `site_content` | `model.Create \| model.Update` | Validates and persists site content. |
+| `get` | `site_content` | `model.Read` | Fetches site content by `SiteID` (requires `MemberChecker` verification). |
+| `save` | `site_content` | `model.Create \| model.Update` | Validates and persists site content (requires `MemberChecker` verification). |
 
 ## Composition Root Example
 

@@ -14,8 +14,9 @@ import (
 
 db := orm.New(mem.New())
 m, err := sitecontent.New(sitecontent.Deps{
-	DB: db,
-	IDs: myIDGenerator,
+	DB:      db,
+	IDs:     myIDGenerator,
+	Members: myMemberChecker, // Omitir nil deniega operaciones ops
 })
 
 content := &sitecontent.Content{

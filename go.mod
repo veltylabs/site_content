@@ -12,3 +12,5 @@ require (
 )
 
 require github.com/tinywasm/input v0.0.4
+
+require github.com/tinywasm/json v0.5.23 // indirect
