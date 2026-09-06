@@ -1,8 +1,8 @@
 package sitecontent
 
 import (
-	"github.com/tinywasm/fmt"
-	"github.com/tinywasm/model"
+	"webtyp.com/fmt"
+	"webtyp.com/model"
 )
 
 func isValidHexColor(c string) bool {

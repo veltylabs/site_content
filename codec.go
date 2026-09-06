@@ -1,6 +1,6 @@
 package sitecontent
 
-import "github.com/tinywasm/model"
+import "webtyp.com/model"
 
 type keyVal struct {
 	key string

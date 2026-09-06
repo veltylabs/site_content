@@ -7,8 +7,8 @@ Esquema del contenido editable de un sitio de cliente dentro del producto `misit
 
 ```go
 import (
-	"github.com/tinywasm/orm"
-	"github.com/tinywasm/storage/mem"
+	"github.com/webtyp/orm"
+	"github.com/webtyp/storage/mem"
 	"github.com/veltylabs/site_content"
 )
 

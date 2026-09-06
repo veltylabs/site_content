@@ -1,8 +1,8 @@
 package sitecontent
 
 import (
-	"github.com/tinywasm/input"
-	"github.com/tinywasm/model"
+	"webtyp.com/input"
+	"webtyp.com/model"
 )
 
 var MapModel = model.Definition{

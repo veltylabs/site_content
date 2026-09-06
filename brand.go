@@ -1,8 +1,8 @@
 package sitecontent
 
 import (
-	"github.com/tinywasm/input"
-	"github.com/tinywasm/model"
+	"webtyp.com/input"
+	"webtyp.com/model"
 )
 
 // Los widgets salen del esquema, no del panel que lo consume: el formulario y

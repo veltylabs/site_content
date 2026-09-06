@@ -3,8 +3,8 @@ package tests
 import (
 	"testing"
 
-	"github.com/tinywasm/input"
-	"github.com/tinywasm/model"
+	"webtyp.com/input"
+	"webtyp.com/model"
 	"github.com/veltylabs/site_content"
 )
 

@@ -1,8 +1,8 @@
 package sitecontent
 
 import (
-	"github.com/tinywasm/input"
-	"github.com/tinywasm/model"
+	"webtyp.com/input"
+	"webtyp.com/model"
 )
 
 // Body, Mission y Vision son prosa: llevan textarea. El resto del charset se
