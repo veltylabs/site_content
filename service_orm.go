@@ -40,8 +40,6 @@ func (m *Service) DecodeFields(r model.FieldReader) {
 
 type ServiceList []*Service
 
-func (s *ServiceList) Schema() []model.Field { return nil }
-func (s *ServiceList) Pointers() []any     { return nil }
 func (s *ServiceList) Len() int             { return len(*s) }
 func (s *ServiceList) At(i int) model.Fielder { return (*s)[i] }
 func (s *ServiceList) Append() model.Fielder  { v := &Service{}; *s = append(*s, v); return v }

@@ -34,8 +34,6 @@ func (m *ImageRef) DecodeFields(r model.FieldReader) {
 
 type ImageRefList []*ImageRef
 
-func (s *ImageRefList) Schema() []model.Field { return nil }
-func (s *ImageRefList) Pointers() []any     { return nil }
 func (s *ImageRefList) Len() int             { return len(*s) }
 func (s *ImageRefList) At(i int) model.Fielder { return (*s)[i] }
 func (s *ImageRefList) Append() model.Fielder  { v := &ImageRef{}; *s = append(*s, v); return v }

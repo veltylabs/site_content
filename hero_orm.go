@@ -28,8 +28,6 @@ func (m *ImageItem) DecodeFields(r model.FieldReader) {
 
 type ImageItemList []*ImageItem
 
-func (s *ImageItemList) Schema() []model.Field { return nil }
-func (s *ImageItemList) Pointers() []any     { return nil }
 func (s *ImageItemList) Len() int             { return len(*s) }
 func (s *ImageItemList) At(i int) model.Fielder { return (*s)[i] }
 func (s *ImageItemList) Append() model.Fielder  { v := &ImageItem{}; *s = append(*s, v); return v }
@@ -66,8 +64,6 @@ func (m *Link) DecodeFields(r model.FieldReader) {
 
 type LinkList []*Link
 
-func (s *LinkList) Schema() []model.Field { return nil }
-func (s *LinkList) Pointers() []any     { return nil }
 func (s *LinkList) Len() int             { return len(*s) }
 func (s *LinkList) At(i int) model.Fielder { return (*s)[i] }
 func (s *LinkList) Append() model.Fielder  { v := &Link{}; *s = append(*s, v); return v }
@@ -134,8 +130,6 @@ func (m *Hero) DecodeFields(r model.FieldReader) {
 
 type HeroList []*Hero
 
-func (s *HeroList) Schema() []model.Field { return nil }
-func (s *HeroList) Pointers() []any     { return nil }
 func (s *HeroList) Len() int             { return len(*s) }
 func (s *HeroList) At(i int) model.Fielder { return (*s)[i] }
 func (s *HeroList) Append() model.Fielder  { v := &Hero{}; *s = append(*s, v); return v }

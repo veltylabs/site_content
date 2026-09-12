@@ -34,8 +34,6 @@ func (m *SEO) DecodeFields(r model.FieldReader) {
 
 type SEOList []*SEO
 
-func (s *SEOList) Schema() []model.Field { return nil }
-func (s *SEOList) Pointers() []any     { return nil }
 func (s *SEOList) Len() int             { return len(*s) }
 func (s *SEOList) At(i int) model.Fielder { return (*s)[i] }
 func (s *SEOList) Append() model.Fielder  { v := &SEO{}; *s = append(*s, v); return v }

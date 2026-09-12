@@ -40,8 +40,6 @@ func (m *Brand) DecodeFields(r model.FieldReader) {
 
 type BrandList []*Brand
 
-func (s *BrandList) Schema() []model.Field { return nil }
-func (s *BrandList) Pointers() []any     { return nil }
 func (s *BrandList) Len() int             { return len(*s) }
 func (s *BrandList) At(i int) model.Fielder { return (*s)[i] }
 func (s *BrandList) Append() model.Fielder  { v := &Brand{}; *s = append(*s, v); return v }

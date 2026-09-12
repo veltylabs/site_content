@@ -40,8 +40,6 @@ func (m *About) DecodeFields(r model.FieldReader) {
 
 type AboutList []*About
 
-func (s *AboutList) Schema() []model.Field { return nil }
-func (s *AboutList) Pointers() []any     { return nil }
 func (s *AboutList) Len() int             { return len(*s) }
 func (s *AboutList) At(i int) model.Fielder { return (*s)[i] }
 func (s *AboutList) Append() model.Fielder  { v := &About{}; *s = append(*s, v); return v }

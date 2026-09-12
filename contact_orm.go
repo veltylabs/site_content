@@ -34,8 +34,6 @@ func (m *Contact) DecodeFields(r model.FieldReader) {
 
 type ContactList []*Contact
 
-func (s *ContactList) Schema() []model.Field { return nil }
-func (s *ContactList) Pointers() []any     { return nil }
 func (s *ContactList) Len() int             { return len(*s) }
 func (s *ContactList) At(i int) model.Fielder { return (*s)[i] }
 func (s *ContactList) Append() model.Fielder  { v := &Contact{}; *s = append(*s, v); return v }

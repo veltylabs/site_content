@@ -28,8 +28,6 @@ func (m *Map) DecodeFields(r model.FieldReader) {
 
 type MapList []*Map
 
-func (s *MapList) Schema() []model.Field { return nil }
-func (s *MapList) Pointers() []any     { return nil }
 func (s *MapList) Len() int             { return len(*s) }
 func (s *MapList) At(i int) model.Fielder { return (*s)[i] }
 func (s *MapList) Append() model.Fielder  { v := &Map{}; *s = append(*s, v); return v }

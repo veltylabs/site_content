@@ -31,8 +31,6 @@ func (m *Stat) DecodeFields(r model.FieldReader) {
 
 type StatList []*Stat
 
-func (s *StatList) Schema() []model.Field { return nil }
-func (s *StatList) Pointers() []any     { return nil }
 func (s *StatList) Len() int             { return len(*s) }
 func (s *StatList) At(i int) model.Fielder { return (*s)[i] }
 func (s *StatList) Append() model.Fielder  { v := &Stat{}; *s = append(*s, v); return v }

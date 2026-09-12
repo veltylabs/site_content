@@ -107,8 +107,6 @@ func (m *Content) DecodeFields(r model.FieldReader) {
 
 type ContentList []*Content
 
-func (s *ContentList) Schema() []model.Field { return nil }
-func (s *ContentList) Pointers() []any     { return nil }
 func (s *ContentList) Len() int             { return len(*s) }
 func (s *ContentList) At(i int) model.Fielder { return (*s)[i] }
 func (s *ContentList) Append() model.Fielder  { v := &Content{}; *s = append(*s, v); return v }

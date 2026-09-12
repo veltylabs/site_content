@@ -31,8 +31,6 @@ func (m *Schedule) DecodeFields(r model.FieldReader) {
 
 type ScheduleList []*Schedule
 
-func (s *ScheduleList) Schema() []model.Field { return nil }
-func (s *ScheduleList) Pointers() []any     { return nil }
 func (s *ScheduleList) Len() int             { return len(*s) }
 func (s *ScheduleList) At(i int) model.Fielder { return (*s)[i] }
 func (s *ScheduleList) Append() model.Fielder  { v := &Schedule{}; *s = append(*s, v); return v }
