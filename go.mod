@@ -13,4 +13,4 @@ require (
 
 require webtyp.com/input v0.0.6
 
-require webtyp.com/json v0.5.25 // indirect
+require webtyp.com/json v0.5.27 // indirect
