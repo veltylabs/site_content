@@ -101,7 +101,7 @@ func (m *Module) Get(siteID string) (*Content, error) {
 	rec.SiteId = siteID
 	err := m.db.Query(&rec).Where("SiteID").Eq(siteID).ReadOne()
 	if err != nil {
-		if err == orm.ErrNotFound {
+		if orm.IsNotFound(err) {
 			return nil, ErrNotFound
 		}
 		return nil, err
@@ -128,8 +128,10 @@ func (m *Module) Save(c *Content) error {
 	}
 
 	existing, err := m.Get(c.SiteId)
-	if err != nil && err != ErrNotFound {
-		return err
+	if err != nil {
+		if e, ok := err.(domainError); !ok || e != ErrNotFound {
+			return err
+		}
 	}
 
 	if existing != nil {
@@ -171,7 +173,7 @@ func (m *Module) OpGet(ctx router.Context) {
 
 	res, err := m.Get(args.SiteId)
 	if err != nil {
-		if err == ErrNotFound {
+		if e, ok := err.(domainError); ok && e == ErrNotFound {
 			ctx.WriteStatus(404)
 			return
 		}
@@ -194,7 +196,7 @@ func (m *Module) OpSave(ctx router.Context) {
 	}
 
 	if err := m.Save(&args); err != nil {
-		if err == ErrNotFound {
+		if e, ok := err.(domainError); ok && e == ErrNotFound {
 			ctx.WriteStatus(404)
 			return
 		}

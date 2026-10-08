@@ -206,7 +206,7 @@ func TestModule_SiteIsolation(t *testing.T) {
 	}
 
 	_, err := m.Get("site-B")
-	if err != sitecontent.ErrNotFound {
+	if err == nil || err.Error() != sitecontent.ErrNotFound.Error() {
 		t.Fatalf("expected ErrNotFound for site-B, got: %v", err)
 	}
 }
