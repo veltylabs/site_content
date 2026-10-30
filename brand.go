@@ -6,7 +6,7 @@ import (
 )
 
 // Los widgets salen del esquema, no del panel que lo consume: el formulario y
-// la validacion quedan sincronizados por construccion. Ver AGENTS.md, seccion
+// la validación quedan sincronizados por construcción. Ver AGENTS.md, sección
 // de la whitelist: form/input es un Kind, no un renderizador.
 var BrandModel = model.Definition{
 	Name: "brand",

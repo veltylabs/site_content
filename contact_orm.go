@@ -6,6 +6,9 @@ import (
 	"webtyp.com/model"
 )
 
+// Contact almacena la información de contacto (teléfono, correo, dirección) de un sitio.
+//
+// Ejemplo: c := sitecontent.Contact{Phone: "+123456789", Email: "test@test.com"}
 type Contact struct {
 	Phone string
 	Email string
@@ -32,6 +35,9 @@ func (m *Contact) DecodeFields(r model.FieldReader) {
 	if v, ok := r.String("Address"); ok { m.Address = v }
 }
 
+// ContactList representa una lista de informaciones de contacto.
+//
+// Ejemplo: contactos := sitecontent.ContactList{}
 type ContactList []*Contact
 
 func (s *ContactList) Len() int             { return len(*s) }

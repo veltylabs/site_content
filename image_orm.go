@@ -6,6 +6,9 @@ import (
 	"webtyp.com/model"
 )
 
+// ImageRef representa una referencia a un archivo de imagen en R2 con su texto alternativo y propósito.
+//
+// Ejemplo: i := sitecontent.ImageRef{Key: "logo.png", Alt: "Logotipo", Usage: "header"}
 type ImageRef struct {
 	Key string
 	Alt string
@@ -32,6 +35,9 @@ func (m *ImageRef) DecodeFields(r model.FieldReader) {
 	if v, ok := r.String("Usage"); ok { m.Usage = v }
 }
 
+// ImageRefList representa una lista de referencias a imágenes.
+//
+// Ejemplo: imgs := sitecontent.ImageRefList{}
 type ImageRefList []*ImageRef
 
 func (s *ImageRefList) Len() int             { return len(*s) }

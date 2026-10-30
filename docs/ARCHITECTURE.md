@@ -1,55 +1,55 @@
-# Architecture — `veltylabs/site_content`
+# Arquitectura — `veltylabs/site_content`
 
-## Overview
+## Resumen
 
-`veltylabs/site_content` provides the schema, persistence, validation, and operations for the editable content of customer websites under the `misitio` product (`misitio.velty.cl`).
+`veltylabs/site_content` provee el esquema, persistencia, validación y operaciones para el contenido editable de los sitios de clientes bajo el producto `misitio` (`misitio.velty.cl`).
 
-This module exists so there is **exactly one** schema contract between the editing panel (which validates prior to saving) and the site compiler (which validates prior to building).
+Este módulo existe para que haya **exactamente un** contrato de esquema entre el panel de edición (que valida antes de guardar) y el compilador del sitio (que valida antes de construir).
 
-## Domain Principles
+## Principios de Dominio
 
-- **Fixed Composition**: Customers edit content within defined entity models (`Brand`, `Contact`, `Hero`, `About`, `Service`, `Stat`, `Schedule`, `Map`, `SEO`, `ImageRef`). They do not choose or reorder layout sections.
-- **Renderer Agnostic**: This module does not import or reference `tinywasm/layout` or any UI kit. Theme mapping is handled externally by `veltylabs/sitetheme`.
-- **Hosting Independent**: `ImageRef.Key` stores R2 object keys, never absolute URLs, avoiding hosting lock-in.
-- **Fail-Closed Uniqueness**: `Service.Slug`, `Service.Title`, and `Service.Description` must be unique per site to prevent publish-time panics.
-- **TinyGo / Worker Compatible**: Designed to execute within Cloudflare Workers without using Go `map[K]V`, `reflect`, `encoding/json`, or heavy stdlib packages.
+- **Composición Fija**: Los clientes editan contenido dentro de modelos de entidad definidos (`Brand`, `Contact`, `Hero`, `About`, `Service`, `Stat`, `Schedule`, `Map`, `SEO`, `ImageRef`). No eligen ni reordenan secciones de layout.
+- **Agnóstico del Renderizador**: Este módulo no importa ni referencia `tinywasm/layout` ni ningún kit de UI. El mapeo del tema es manejado externamente por `veltylabs/sitetheme`.
+- **Independiente del Hosting**: `ImageRef.Key` almacena claves de objeto R2, nunca URLs absolutas, evitando la dependencia de un solo proveedor de hosting.
+- **Unicidad Fail-Closed**: `Service.Slug`, `Service.Title`, y `Service.Description` deben ser únicos por sitio para prevenir fallos (panics) en tiempo de publicación.
+- **Compatible con TinyGo / Worker**: Diseñado para ejecutarse dentro de Cloudflare Workers sin usar `map[K]V` de Go, `reflect`, `encoding/json`, ni paquetes pesados de la biblioteca estándar.
 
-## Entities
+## Entidades
 
-- `Content`: Root document containing `SiteID` (Primary Key) and embedded domain models.
-- `Brand`: Site name, primary color, logos, and alt text.
-- `Contact`: Contact information (`Phone`, `Email`, `Address`).
-- `Hero`: Hero section title, subtitle, CTAs, and images.
-- `About`: About section details (`Title`, `Body`, `Image`, `Mission`, `Vision`).
-- `Service`: Service subpages (`Slug`, `Title`, `Description`, `Image`, `Body`).
-- `Stat`: Metrics and statistics (`Value`, `Label`).
-- `Schedule`: Operating hours (`Days`, `Hours`).
-- `Map`: Map embed configuration (`EmbedURL`).
-- `SEO`: Search engine optimization settings (`Description`, `SocialImage`, `SchemaType`).
-- `ImageRef`: Asset reference (`Key`, `Alt`, `Usage`).
+- `Content`: Documento raíz que contiene `SiteID` (Clave Primaria) y modelos de dominio incrustados.
+- `Brand`: Nombre del sitio, color primario, logos y texto alternativo.
+- `Contact`: Información de contacto (`Phone`, `Email`, `Address`).
+- `Hero`: Título de la sección hero, subtítulo, CTAs e imágenes.
+- `About`: Detalles de la sección acerca de (`Title`, `Body`, `Image`, `Mission`, `Vision`).
+- `Service`: Subpáginas de servicio (`Slug`, `Title`, `Description`, `Image`, `Body`).
+- `Stat`: Métricas y estadísticas (`Value`, `Label`).
+- `Schedule`: Horas de operación (`Days`, `Hours`).
+- `Map`: Configuración del mapa incrustado (`EmbedURL`).
+- `SEO`: Configuraciones de optimización para motores de búsqueda (`Description`, `SocialImage`, `SchemaType`).
+- `ImageRef`: Referencia a un activo (`Key`, `Alt`, `Usage`).
 
-## Access Surfaces & Security Model
+## Superficies de Acceso y Modelo de Seguridad
 
-This module exposes two distinct access surfaces with different security contracts:
+Este módulo expone dos superficies de acceso distintas con diferentes contratos de seguridad:
 
-1. **Service Methods (`Get`, `Save`)**:
-   - Do **not** perform membership checks or membership authorization.
-   - Designed for internal calls by a composition root (e.g. REST handlers) that handles authorization independently.
-   - `Deps.Members` can be `nil` without affecting direct service method invocation.
+1. **Métodos de Servicio (`Get`, `Save`)**:
+   - **No** realizan comprobaciones de membresía ni autorización de membresía.
+   - Diseñados para llamadas internas por una raíz de composición (ej. manejadores REST) que maneja la autorización independientemente.
+   - `Deps.Members` puede ser `nil` sin afectar la invocación directa de los métodos de servicio.
 
-2. **Module Operations (`OpGet`, `OpSave`)**:
-   - Enforce membership access via the injected `MemberChecker` interface.
-   - Execute membership verification before reading or validating/writing domain data.
-   - Deny operation access (`403 Forbidden`) if `Deps.Members` is `nil` or if `CanEditContent(userID, siteID)` returns `false`.
+2. **Operaciones del Módulo (`OpGet`, `OpSave`)**:
+   - Imponen acceso por membresía a través de la interfaz inyectada `MemberChecker`.
+   - Ejecutan verificación de membresía antes de leer o validar/escribir datos de dominio.
+   - Deniegan el acceso a la operación (`403 Forbidden`) si `Deps.Members` es `nil` o si `CanEditContent(userID, siteID)` retorna `false`.
 
-## Operations
+## Operaciones
 
-| Op | Resource | Action | Description |
+| Op | Recurso | Acción | Descripción |
 |---|---|---|---|
-| `get` | `site_content` | `model.Read` | Fetches site content by `SiteID` (requires `MemberChecker` verification). |
-| `save` | `site_content` | `model.Create \| model.Update` | Validates and persists site content (requires `MemberChecker` verification). |
+| `get` | `site_content` | `model.Read` | Obtiene el contenido del sitio por `SiteID` (requiere verificación `MemberChecker`). |
+| `save` | `site_content` | `model.Create \| model.Update` | Valida y guarda el contenido del sitio (requiere verificación `MemberChecker`). |
 
-## Composition Root Example
+## Ejemplo de Raíz de Composición
 
 ```go
 package main

@@ -212,7 +212,11 @@ func (a *memArrayReader) Bytes(i int) []byte {
 	return nil
 }
 
-// MemoryCodec allows encoding and decoding a Content document safely in-memory.
+// MemoryCodec permite codificar y decodificar un documento Content de manera segura en memoria.
+//
+// Ejemplo:
+//   mc := MemoryCodec{}
+//   encoded := mc.Encode(content)
 type MemoryCodec struct{}
 
 func (mc MemoryCodec) Encode(c *Content) string {

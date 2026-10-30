@@ -6,6 +6,9 @@ import (
 	"webtyp.com/model"
 )
 
+// Schedule almacena la información de horario de funcionamiento (días y horas).
+//
+// Ejemplo: s := sitecontent.Schedule{Days: "Lunes - Viernes", Hours: "09:00 - 18:00"}
 type Schedule struct {
 	Days string
 	Hours string
@@ -29,6 +32,9 @@ func (m *Schedule) DecodeFields(r model.FieldReader) {
 	if v, ok := r.String("Hours"); ok { m.Hours = v }
 }
 
+// ScheduleList representa una lista de horarios.
+//
+// Ejemplo: horarios := sitecontent.ScheduleList{}
 type ScheduleList []*Schedule
 
 func (s *ScheduleList) Len() int             { return len(*s) }
