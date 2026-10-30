@@ -6,6 +6,9 @@ import (
 	"webtyp.com/model"
 )
 
+// Service representa una página de servicio con su descripción y cuerpo de texto.
+//
+// Ejemplo: s := sitecontent.Service{Title: "Desarrollo Web", Slug: "desarrollo-web"}
 type Service struct {
 	Slug string
 	Title string
@@ -38,6 +41,9 @@ func (m *Service) DecodeFields(r model.FieldReader) {
 	if v, ok := r.String("Body"); ok { m.Body = v }
 }
 
+// ServiceList representa una lista de servicios.
+//
+// Ejemplo: lista := sitecontent.ServiceList{}
 type ServiceList []*Service
 
 func (s *ServiceList) Len() int             { return len(*s) }

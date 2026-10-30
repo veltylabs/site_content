@@ -7,6 +7,9 @@ import (
 	"webtyp.com/orm"
 )
 
+// Content define la estructura del documento raíz del sitio.
+//
+// Ejemplo: c := &sitecontent.Content{SiteId: "mi-sitio"}
 type Content struct {
 	SiteId string
 	Brand Brand
@@ -105,6 +108,9 @@ func (m *Content) DecodeFields(r model.FieldReader) {
 	}
 }
 
+// ContentList representa una lista de documentos de contenido del sitio.
+//
+// Ejemplo: lista := sitecontent.ContentList{}
 type ContentList []*Content
 
 func (s *ContentList) Len() int             { return len(*s) }

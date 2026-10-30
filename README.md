@@ -29,6 +29,8 @@ content := &sitecontent.Content{
 err = m.Save(content)
 ```
 
+`New` migra a través de `sitecontent.Migrate`, el cual usa `ddl.Sync`: crea las tablas que faltan y agrega las columnas nuevas. Flujo: https://github.com/webtyp/ddl/blob/main/docs/diagrams/SYNC_FLOW.md
+
 ## Operaciones
 
 | Op | Recurso | Acción | Descripción |

@@ -44,18 +44,31 @@ func (m *ContentRecord) Validate(action byte) error {
 	return model.ValidateFields(action, m)
 }
 
+// Deps agrupa las dependencias necesarias para inicializar el módulo.
+//
+// Ejemplo:
+//   d := sitecontent.Deps{DB: miDB, IDs: miGenerador}
 type Deps struct {
 	DB      *orm.DB
 	IDs     model.IDGenerator
 	Members MemberChecker // nil DENIEGA en los ops; los métodos de servicio no lo consultan
 }
 
+// Module implementa la lógica de operaciones y persistencia para el contenido del sitio.
+//
+// Ejemplo:
+//   m, err := sitecontent.New(deps)
 type Module struct {
 	db      *orm.DB
 	ids     model.IDGenerator
 	members MemberChecker
 }
 
+// New crea y configura un nuevo Module, además de asegurar que el esquema base de datos
+// esté actualizado.
+//
+// Ejemplo:
+//   m, err := sitecontent.New(sitecontent.Deps{DB: db, IDs: idGen})
 func New(d Deps) (*Module, error) {
 	if d.DB == nil {
 		return nil, fmt.Err("site_content", "DB required")
@@ -70,8 +83,8 @@ func New(d Deps) (*Module, error) {
 		members: d.Members,
 	}
 
-	if compiler, ok := d.DB.RawConn().(ddl.Compiler); ok {
-		if err := ddl.New(d.DB.RawConn(), compiler).CreateTable(&ContentRecord{}); err != nil {
+	if c, ok := d.DB.RawConn().(ddl.Compiler); ok {
+		if err := Migrate(d.DB.RawConn(), c); err != nil {
 			return nil, err
 		}
 	}

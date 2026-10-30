@@ -6,6 +6,9 @@ import (
 	"webtyp.com/model"
 )
 
+// ImageItem contiene una referencia (clave R2) a una imagen utilizada en la sección hero u otras.
+//
+// Ejemplo: img := sitecontent.ImageItem{Key: "mi-imagen.png"}
 type ImageItem struct {
 	Key string
 }
@@ -26,6 +29,9 @@ func (m *ImageItem) DecodeFields(r model.FieldReader) {
 	if v, ok := r.String("Key"); ok { m.Key = v }
 }
 
+// ImageItemList representa una lista de referencias a imágenes.
+//
+// Ejemplo: imgs := sitecontent.ImageItemList{}
 type ImageItemList []*ImageItem
 
 func (s *ImageItemList) Len() int             { return len(*s) }
@@ -39,6 +45,9 @@ func (m *ImageItem) Validate(action byte) error {
 	return model.ValidateFields(action, m)
 }
 
+// Link representa un enlace con texto y URL, típicamente usado como un CTA (Call To Action).
+//
+// Ejemplo: cta := sitecontent.Link{Text: "Saber más", Url: "/acerca-de"}
 type Link struct {
 	Text string
 	Url string
@@ -62,6 +71,9 @@ func (m *Link) DecodeFields(r model.FieldReader) {
 	if v, ok := r.String("URL"); ok { m.Url = v }
 }
 
+// LinkList representa una lista de enlaces (CTAs).
+//
+// Ejemplo: enlaces := sitecontent.LinkList{}
 type LinkList []*Link
 
 func (s *LinkList) Len() int             { return len(*s) }
@@ -75,6 +87,9 @@ func (m *Link) Validate(action byte) error {
 	return model.ValidateFields(action, m)
 }
 
+// Hero define la sección principal (hero) de un sitio, incluyendo su título, subtítulo, CTAs e imágenes.
+//
+// Ejemplo: h := sitecontent.Hero{Title: "Bienvenido", Subtitle: "A nuestro sitio"}
 type Hero struct {
 	Title string
 	Subtitle string
@@ -128,6 +143,9 @@ func (m *Hero) DecodeFields(r model.FieldReader) {
 	}
 }
 
+// HeroList representa una lista de secciones hero.
+//
+// Ejemplo: heroes := sitecontent.HeroList{}
 type HeroList []*Hero
 
 func (s *HeroList) Len() int             { return len(*s) }

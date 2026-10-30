@@ -6,6 +6,9 @@ import (
 	"webtyp.com/model"
 )
 
+// Brand representa la configuración de marca (logo, nombre y color primario) de un sitio.
+//
+// Ejemplo: b := sitecontent.Brand{Name: "Mi Marca", PrimaryColor: "#FF0000"}
 type Brand struct {
 	Name string
 	WideLogo string
@@ -38,6 +41,9 @@ func (m *Brand) DecodeFields(r model.FieldReader) {
 	if v, ok := r.String("PrimaryColor"); ok { m.PrimaryColor = v }
 }
 
+// BrandList representa una lista de configuraciones de marca.
+//
+// Ejemplo: marcas := sitecontent.BrandList{}
 type BrandList []*Brand
 
 func (s *BrandList) Len() int             { return len(*s) }

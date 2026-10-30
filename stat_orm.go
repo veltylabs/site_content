@@ -6,6 +6,9 @@ import (
 	"webtyp.com/model"
 )
 
+// Stat representa una estadística o métrica para mostrar, con un valor numérico y una etiqueta.
+//
+// Ejemplo: s := sitecontent.Stat{Value: "+10", Label: "Años de Experiencia"}
 type Stat struct {
 	Value string
 	Label string
@@ -29,6 +32,9 @@ func (m *Stat) DecodeFields(r model.FieldReader) {
 	if v, ok := r.String("Label"); ok { m.Label = v }
 }
 
+// StatList representa una lista de métricas o estadísticas.
+//
+// Ejemplo: stats := sitecontent.StatList{}
 type StatList []*Stat
 
 func (s *StatList) Len() int             { return len(*s) }

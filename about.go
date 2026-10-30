@@ -6,7 +6,7 @@ import (
 )
 
 // Body, Mission y Vision son prosa: llevan textarea. El resto del charset se
-// declara aqui, no en el panel, para que un renombre de campo no degrade el
+// declara aquí, no en el panel, para que un renombre de campo no degrade el
 // widget en silencio.
 var AboutModel = model.Definition{
 	Name: "about",

@@ -31,32 +31,34 @@ func isValidSlug(s string) bool {
 	return true
 }
 
-// Validate runs model.ValidateFields over the entire document and additionally
-// enforces rules that the schema alone cannot express: the three uniqueness rules
-// of Service, slug formatting, and PrimaryColor format.
+// Validate ejecuta model.ValidateFields sobre todo el documento y adicionalmente
+// impone reglas que el esquema por sí solo no puede expresar: las tres reglas de
+// unicidad de Service, el formato de slug, y el formato de PrimaryColor.
+//
+// Ejemplo: err := sitecontent.Validate(content)
 func Validate(c *Content) error {
 	if c == nil {
 		return fmt.Err("site_content", "nil content")
 	}
 
-	// First validate root Content fields and nested single-struct fields via model.ValidateFields
+	// Primero valida los campos raíz de Content y los campos de estructura única anidados vía model.ValidateFields
 	if err := model.ValidateFields(model.ActionCreate, c); err != nil {
 		return err
 	}
 
-	// Validate Hero Title NotNull
+	// Valida que el Título del Hero no sea nulo
 	if err := model.ValidateFields(model.ActionCreate, &c.Hero); err != nil {
 		return err
 	}
 
-	// Validate Brand PrimaryColor format if present
+	// Valida el formato de PrimaryColor de Brand si está presente
 	if c.Brand.PrimaryColor != "" {
 		if !isValidHexColor(c.Brand.PrimaryColor) {
 			return fmt.Err("site_content: color primario invalido: debe ser #rrggbb")
 		}
 	}
 
-	// Validate slice elements
+	// Valida los elementos del slice (arreglo)
 	for i := 0; i < len(c.Services); i++ {
 		if err := model.ValidateFields(model.ActionCreate, &c.Services[i]); err != nil {
 			return err
@@ -96,7 +98,7 @@ func Validate(c *Content) error {
 		}
 	}
 
-	// Service uniqueness checks (using pair-wise slice comparisons, no map[K]V)
+	// Comprobaciones de unicidad de Service (usando comparaciones de pares de slices, sin map[K]V)
 	n := len(c.Services)
 	for i := 0; i < n; i++ {
 		for j := i + 1; j < n; j++ {

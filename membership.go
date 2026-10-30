@@ -9,6 +9,10 @@ package sitecontent
 //
 // nil DENIEGA. La ausencia de un comprobador no es un permiso — es el mismo
 // criterio que model.Allowed aplica a un Authorizer ausente.
+//
+// Ejemplo:
+//   var checker sitecontent.MemberChecker = myModule
+//   if checker.CanEditContent("usr1", "sitio-demo") { ... }
 type MemberChecker interface {
 	// CanEditContent informa si userID puede leer y escribir el contenido de
 	// siteID. Una sola pregunta, no un rol: qué significa "puede" es del

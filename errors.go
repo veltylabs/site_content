@@ -7,10 +7,10 @@ const (
 	ErrInvalidColor  = "site_content: color primario invalido: debe ser #rrggbb"
 )
 
-// domainError is the concrete type of this package's sentinel errors. Code
-// compares them by asserting this type and comparing the value: == between two
-// error values compiles, under TinyGo, to runtime.interfaceEqual, which pulls
-// internal/reflectlite into the wasm binary.
+// domainError es el tipo concreto de los errores centinela de este paquete. El código
+// los compara afirmando este tipo y comparando el valor: == entre dos
+// valores de error compila, bajo TinyGo, a runtime.interfaceEqual, lo que incluye
+// internal/reflectlite en el binario wasm.
 type domainError string
 
 func (e domainError) Error() string { return string(e) }

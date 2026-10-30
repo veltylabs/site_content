@@ -6,6 +6,9 @@ import (
 	"webtyp.com/model"
 )
 
+// Map define la configuración para un mapa incrustado en el sitio.
+//
+// Ejemplo: m := sitecontent.Map{EmbedUrl: "https://maps.google.com/..."}
 type Map struct {
 	EmbedUrl string
 }
@@ -26,6 +29,9 @@ func (m *Map) DecodeFields(r model.FieldReader) {
 	if v, ok := r.String("EmbedURL"); ok { m.EmbedUrl = v }
 }
 
+// MapList representa una lista de configuraciones de mapa.
+//
+// Ejemplo: mapas := sitecontent.MapList{}
 type MapList []*Map
 
 func (s *MapList) Len() int             { return len(*s) }

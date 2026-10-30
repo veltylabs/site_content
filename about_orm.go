@@ -6,6 +6,9 @@ import (
 	"webtyp.com/model"
 )
 
+// About contiene la información de la sección "Acerca de", como título, misión y visión.
+//
+// Ejemplo: a := sitecontent.About{Title: "Nuestra Empresa"}
 type About struct {
 	Title string
 	Body string
@@ -38,6 +41,9 @@ func (m *About) DecodeFields(r model.FieldReader) {
 	if v, ok := r.String("Vision"); ok { m.Vision = v }
 }
 
+// AboutList representa una lista de secciones "Acerca de".
+//
+// Ejemplo: lista := sitecontent.AboutList{}
 type AboutList []*About
 
 func (s *AboutList) Len() int             { return len(*s) }

@@ -6,6 +6,9 @@ import (
 	"webtyp.com/model"
 )
 
+// SEO contiene la configuración para la optimización en motores de búsqueda.
+//
+// Ejemplo: s := sitecontent.SEO{Description: "Sitio increíble", SchemaType: "LocalBusiness"}
 type SEO struct {
 	Description string
 	SocialImage string
@@ -32,6 +35,9 @@ func (m *SEO) DecodeFields(r model.FieldReader) {
 	if v, ok := r.String("SchemaType"); ok { m.SchemaType = v }
 }
 
+// SEOList representa una lista de configuraciones de SEO.
+//
+// Ejemplo: seos := sitecontent.SEOList{}
 type SEOList []*SEO
 
 func (s *SEOList) Len() int             { return len(*s) }
