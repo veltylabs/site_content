@@ -11,7 +11,7 @@ require (
 	webtyp.com/storage v0.1.18
 )
 
-require webtyp.com/input v0.0.20
+require webtyp.com/input v0.0.36
 
 require (
 	webtyp.com/escape v0.1.0 // indirect
