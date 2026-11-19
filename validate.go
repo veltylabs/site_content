@@ -11,7 +11,7 @@ func isValidHexColor(c string) bool {
 	}
 	for i := 1; i < 7; i++ {
 		b := c[i]
-		if !(b >= '0' && b <= '9') && !(b >= 'a' && b <= 'f') && !(b >= 'A' && b <= 'F') {
+		if (b < '0' || b > '9') && (b < 'a' || b > 'f') && (b < 'A' || b > 'F') {
 			return false
 		}
 	}
@@ -24,7 +24,7 @@ func isValidSlug(s string) bool {
 	}
 	for i := 0; i < len(s); i++ {
 		b := s[i]
-		if !(b >= 'a' && b <= 'z') && !(b >= '0' && b <= '9') && b != '-' {
+		if (b < 'a' || b > 'z') && (b < '0' || b > '9') && b != '-' {
 			return false
 		}
 	}

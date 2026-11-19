@@ -8,8 +8,6 @@ import (
 	"webtyp.com/router"
 )
 
-var _ router.OperationModule = (*Module)(nil)
-
 type ContentRecord struct {
 	SiteId string
 	Data   string
@@ -97,11 +95,11 @@ func (m *Module) ModelName() string {
 }
 
 func (m *Module) MountOperations(reg router.OperationRegistry) {
-	reg.Operation("get", m.OpGet).
+	reg.Operation(router.Operation{Module: "site_content", Entity: "content", Action: model.Read}, m.OpGet).
 		Requires(model.Resource("site_content"), model.Read).
 		Accepts(&Content{})
 
-	reg.Operation("save", m.OpSave).
+	reg.Operation(router.Operation{Module: "site_content", Entity: "content", Action: model.Update}, m.OpSave).
 		Requires(model.Resource("site_content"), model.Create|model.Update).
 		Accepts(&Content{})
 }

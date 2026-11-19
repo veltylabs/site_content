@@ -29,7 +29,7 @@ func setupModuleWithMembers(t *testing.T, members sitecontent.MemberChecker) *si
 }
 
 func mockCtx(userID string, payload *sitecontent.Content) *mock.Context {
-	ctx := &mock.Context{}
+	ctx := &mock.Context{InMethod: "POST"}
 	ctx.SetUserID(userID)
 	if payload != nil {
 		_ = ctx.Encode(payload)
