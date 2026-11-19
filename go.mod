@@ -22,6 +22,6 @@ require (
 	webtyp.com/events v0.1.15 // indirect
 	webtyp.com/filetype v0.1.1 // indirect
 	webtyp.com/json v0.5.40 // indirect
-	webtyp.com/lang v0.1.20 // indirect
+	webtyp.com/lang v0.1.22 // indirect
 	webtyp.com/time v0.6.7 // indirect
 )
